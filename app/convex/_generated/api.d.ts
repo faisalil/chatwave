@@ -14,6 +14,8 @@ import type * as http from "../http.js";
 import type * as messages from "../messages.js";
 import type * as profiles from "../profiles.js";
 import type * as router from "../router.js";
+import type * as seed from "../seed.js";
+import type * as workspaces from "../workspaces.js";
 
 import type {
   ApiFromModules,
@@ -28,6 +30,8 @@ declare const fullApi: ApiFromModules<{
   messages: typeof messages;
   profiles: typeof profiles;
   router: typeof router;
+  seed: typeof seed;
+  workspaces: typeof workspaces;
 }>;
 
 /**

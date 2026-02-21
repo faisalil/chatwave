@@ -1,6 +1,10 @@
-import { query, mutation } from "./_generated/server";
-import { v } from "convex/values";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { v } from "convex/values";
+import { mutation, query } from "./_generated/server";
+import {
+  assertSingleWorkspaceMembership,
+  requireWorkspaceForUser,
+} from "./workspaces";
 
 export const list = query({
   args: {},
@@ -9,8 +13,16 @@ export const list = query({
     if (!userId) {
       return [];
     }
-    
-    return await ctx.db.query("channels").collect();
+
+    const membership = await assertSingleWorkspaceMembership(ctx, userId);
+    if (!membership) {
+      return [];
+    }
+
+    return await ctx.db
+      .query("channels")
+      .withIndex("by_workspace", (q) => q.eq("workspaceId", membership.workspaceId))
+      .collect();
   },
 });
 
@@ -24,18 +36,27 @@ export const create = mutation({
       throw new Error("Not authenticated");
     }
 
-    // Check if channel already exists
+    const name = args.name.trim();
+    if (!name) {
+      throw new Error("Channel name is required");
+    }
+
+    const membership = await requireWorkspaceForUser(ctx, userId);
+
     const existing = await ctx.db
       .query("channels")
-      .withIndex("by_name", (q) => q.eq("name", args.name))
+      .withIndex("by_workspace_and_name", (q) =>
+        q.eq("workspaceId", membership.workspaceId).eq("name", name),
+      )
       .first();
-    
+
     if (existing) {
       throw new Error("Channel already exists");
     }
 
     return await ctx.db.insert("channels", {
-      name: args.name,
+      workspaceId: membership.workspaceId,
+      name,
       createdBy: userId,
     });
   },
@@ -51,6 +72,20 @@ export const get = query({
       return null;
     }
 
-    return await ctx.db.get(args.channelId);
+    const membership = await assertSingleWorkspaceMembership(ctx, userId);
+    if (!membership) {
+      return null;
+    }
+
+    const channel = await ctx.db.get(args.channelId);
+    if (!channel) {
+      return null;
+    }
+
+    if (channel.workspaceId !== membership.workspaceId) {
+      throw new Error("Not authorized to access this channel");
+    }
+
+    return channel;
   },
 });

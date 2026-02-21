@@ -1,0 +1,14 @@
+{
+  "name": "e2e-tests",
+  "private": true,
+  "scripts": {
+    "qamate": "qamate",
+    "test": "playwright test",
+    "qamate:test": "qamate test",
+    "qamate:run": "qamate run"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "qamate": "^0.3.1"
+  }
+}

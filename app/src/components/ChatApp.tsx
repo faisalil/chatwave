@@ -25,7 +25,7 @@ export function ChatApp() {
     <div className="h-screen flex flex-col bg-white">
       {/* Header */}
       <header className="h-16 bg-purple-600 text-white flex items-center justify-between px-4 shadow-sm">
-        <h1 className="text-xl font-bold">Slack Clone</h1>
+        <h1 className="text-xl font-bold">ChatWave</h1>
         <div className="flex items-center gap-4">
           <button
             onClick={() => setShowSearch(true)}

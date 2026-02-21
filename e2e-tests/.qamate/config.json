@@ -1,0 +1,33 @@
+{
+  "defaults": {
+    "browser": {
+      "name": "chromium",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      }
+    },
+    "tracing": {
+      "capture": "on-failure",
+      "logs": "on-failure"
+    },
+    "testSelection": {},
+    "ai": {
+      "summary": false,
+      "investigate": false,
+      "fix": false
+    },
+    "timeout": 30000,
+    "retries": 0,
+    "env": {}
+  },
+  "project": {
+    "id": "k572ker55b4xwejm8y1yzfp93n81hx2v",
+    "name": "chatwave"
+  },
+  "workspace": {
+    "id": "kn75d3fswv2zs9pwyyhj9t4am181a9ds",
+    "name": "Seed Workspace",
+    "slug": "seed-workspace"
+  }
+}

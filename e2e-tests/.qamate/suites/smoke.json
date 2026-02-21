@@ -1,0 +1,5 @@
+{
+  "description": "Starter smoke suite",
+  "timeout": 30000,
+  "retries": 0
+}
