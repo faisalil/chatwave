@@ -63,6 +63,15 @@ ensure_auth_envs() {
   err "Deployment ${target_label} is missing JWT_PRIVATE_KEY/JWKS. Set CONVEX_JWT_PRIVATE_KEY and CONVEX_JWKS."
 }
 
+run_seed() {
+  local target_label="$1"
+  shift
+  local target_args=("$@")
+
+  echo "==> Running seed on ${target_label}"
+  npx convex run "${target_args[@]}" seed
+}
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 APP_DIR="${REPO_ROOT}/app"
@@ -165,8 +174,10 @@ fi
 
 if [[ "$DEPLOY_ENV" == "preview" ]]; then
   ensure_auth_envs "preview ${PREVIEW_NAME}" --preview-name "$PREVIEW_NAME"
+  run_seed "preview ${PREVIEW_NAME}" --preview-name "$PREVIEW_NAME"
 else
   ensure_auth_envs "$DEPLOY_ENV deployment"
+  run_seed "$DEPLOY_ENV deployment"
 fi
 
 echo "==> Deploying Fly app ${FLY_APP}"

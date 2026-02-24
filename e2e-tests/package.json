@@ -9,6 +9,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
-    "qamate": "^0.3.1"
+    "qamate": "0.3.2"
   }
 }

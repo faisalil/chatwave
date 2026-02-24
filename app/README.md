@@ -66,10 +66,10 @@ This repository deploys both Convex and the Vite frontend to Fly.io.
 - `.github/workflows/deploy-production.yml`
   - Trigger: Release `published` and `workflow_dispatch`
   - Guard: release target must be `main`
-  - Deploys Convex production + Fly production app
+  - Deploys Convex production + runs `seed` + Fly production app
 - `.github/workflows/deploy-development.yml`
   - Trigger: push to `main` and `workflow_dispatch`
-  - Deploys Convex development cloud + Fly development app
+  - Deploys Convex development cloud + runs `seed` + Fly development app
 
 ### Required GitHub secrets
 
@@ -96,6 +96,9 @@ gh secret set CONVEX_AUTH_JWKS --repo faisalil/chatwave
 - `./scripts/deploy-env.sh --env prod|dev|preview ...`
 - `./scripts/deploy-preview.sh`
 - `./scripts/destroy-preview.sh --app <fly_app> [--preview-name <convex_preview>]`
+
+`deploy-env.sh` now runs `npx convex run seed` as part of every deployment
+(prod/dev/preview) after Convex deploy/auth checks and before Fly deploy.
 
 Preview workflow:
 
