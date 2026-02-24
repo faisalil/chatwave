@@ -61,6 +61,11 @@ This repository deploys both Convex and the Vite frontend to Fly.io.
 - Development: `chatwave-dev-c05a04c2`
 - Preview: `chatwave-pr-<shortsha>-<rand4>` (new app on each preview run)
 
+### Environment URLs
+
+- Production: [https://chatwave-prod-c05a04c2.fly.dev](https://chatwave-prod-c05a04c2.fly.dev)
+- Development: [https://chatwave-dev-c05a04c2.fly.dev](https://chatwave-dev-c05a04c2.fly.dev)
+
 ### GitHub Actions
 
 - `.github/workflows/deploy-production.yml`

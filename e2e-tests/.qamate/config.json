@@ -1,5 +1,6 @@
 {
   "defaults": {
+    "baseURL": "https://chatwave-dev-c05a04c2.fly.dev",
     "browser": {
       "name": "chromium",
       "viewport": {
